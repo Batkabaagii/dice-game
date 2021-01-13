@@ -1,5 +1,5 @@
 //Тоглогчийн ээлжийг хадгалах хувьсагч 1-р тоглогчийг  0, 2-р тоглогчийг 1 гэж тэмдэглэе.
-var activePlayer = 1;
+var activePlayer = 0;
 //Тоглогчийн цуглуулсан оноог хадгалах хувьсагч 
 var scores = [0, 0];
 //Тоглогчийн ээлжиндээ цуглуулж байгаа оноог цуглуулах хувьсагч 
@@ -20,8 +20,22 @@ document.getElementById('current-0').textContent = 0;
 document.getElementById('current-1').textContent = 0;
 var diceDom = document.querySelector( ".dice ");
 
+//заа энд бол event ажиллуулсан байгаа даа хө яаж вэ гэвэл addEventListener('click', blabal ) гээд ажиллуулсан байгаа даа   
 document.querySelector('.btn-roll').addEventListener('click', function (){
     var diceNumber =  Math.floor(Math.random()*6)+1;
-    document.querySelector( ".dice ").style.display = "block"
-    document.querySelector( ".dice ").src = 'dice-' +diceNumber + ".png";
+    document.querySelector( ".dice ").style.display = "block"// шоог веб джэр гөргөж ирнэ.
+    document.querySelector( ".dice ").src = 'dice-' +diceNumber + ".png";// буусан санамсаргүй тооны зургийг гаргаж ирнээ хө.
+    if(diceNumber !== 1 ){
+        roundScore = roundScore + diceNumber;
+        document.getElementById('current-' + activePlayer).textContent = roundScore;
+    }
+    else{  
+        roundScore = 0; 
+        document.getElementById('current-' + activePlayer).textContent = 0;
+        activePlayer === 0 ? (activePlayer = 1):(activePlayer = 0);
+        
+        document.querySelector('.player-0-panel').classList.toggle('active');
+        document.querySelector('.player-1-panel').classList.toggle('active');
+        document.querySelector( ".dice ").style.display = "none";
+    }
 });
