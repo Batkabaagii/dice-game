@@ -1,5 +1,7 @@
 //Тоглогчийн ээлжийг хадгалах хувьсагч 1-р тоглогчийг  0, 2-р тоглогчийг 1 гэж тэмдэглэе.
 var activePlayer = 0;
+var isNewGame = true;
+
 //Тоглогчийн цуглуулсан оноог хадгалах хувьсагч 
 var scores = [0, 0];
 //Тоглогчийн ээлжиндээ цуглуулж байгаа оноог цуглуулах хувьсагч 
@@ -15,6 +17,7 @@ var roundScore = 0;
  // одоо эндээс би шоогоо алга болгоно яаж css-ийн dice гэсэн класс дээр display: none; гэж оруулаад алга болноо
  intGame();
  function intGame(){
+    isNewGame = true;
     document.getElementById('score-0').textContent = 0;// getElementByID ene bol ID haij bga yumaa hu 
     document.getElementById('score-1').textContent = 0;
     document.getElementById('current-0').textContent = 0;
@@ -34,7 +37,8 @@ var diceDom = document.querySelector( ".dice ");
 
 //заа энд бол event ажиллуулсан байгаа даа хө яаж вэ гэвэл addEventListener('click', blabal ) гээд ажиллуулсан байгаа даа   
 document.querySelector('.btn-roll').addEventListener('click', function (){
-    var diceNumber =  Math.floor(Math.random()*6)+1;
+            if (isNewGame ===true){
+            var diceNumber =  Math.floor(Math.random()*6)+1;
     document.querySelector( ".dice ").style.display = "block"// шоог веб джэр гөргөж ирнэ.
     document.querySelector( ".dice ").src = 'dice-' +diceNumber + ".png";// буусан санамсаргүй тооны зургийг гаргаж ирнээ хө.
     if(diceNumber !== 1 ){
@@ -45,18 +49,29 @@ document.querySelector('.btn-roll').addEventListener('click', function (){
     else{  
         switchToNextPlayer();
     }
+        }
+        else{
+            alert('New Game darna uu');
+        }
+        
     
 });
     document.querySelector('.btn-hold').addEventListener("click", function(){
         
-        scores[activePlayer] = scores[activePlayer] + roundScore;
+        if(isNewGame === true){
+            scores[activePlayer] = scores[activePlayer] + roundScore;
         document.getElementById('score-' + activePlayer ).textContent = scores[activePlayer];
-        if (scores[activePlayer] >= 10 ){
+        if (scores[activePlayer] >= 50 ){
+            isNewGame = false;
             document.getElementById("name-" + activePlayer).textContent = "WINNER!!!";
             document.querySelector(".player-"+ activePlayer +"-panel").classList.add("winner");
             document.querySelector(".player-"+activePlayer+ "-panel").classList.remove("active");
         }else{
             switchToNextPlayer();
+        }
+        }
+        else{
+            alert('togloom duussan tul ta NEW GAME darna uu ')
         }
         
     });
