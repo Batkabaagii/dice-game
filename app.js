@@ -18,6 +18,9 @@ var roundScore = 0;
  intGame();
  function intGame(){
     isNewGame = true;
+    scores[0]=0;
+    scores[1]=0;
+    roundScore = 0;
     document.getElementById('score-0').textContent = 0;// getElementByID ene bol ID haij bga yumaa hu 
     document.getElementById('score-1').textContent = 0;
     document.getElementById('current-0').textContent = 0;
@@ -26,9 +29,10 @@ var roundScore = 0;
     document.getElementById("name-1").textContent = "Player 2";
     document.querySelector(".player-"+ activePlayer +"-panel").classList.remove("winner");
     document.querySelector( ".dice ").style.display = "none";
-    document.querySelector('.player-'+activePlayer+'-panel').classList.remove('active');
+    document.querySelector('.player-0-panel').classList.remove('active');
+    document.querySelector('.player-1-panel').classList.remove('active');
     document.querySelector('.player-0-panel').classList.add('active');
-    
+    activePlayer = 0;
 
 }
 // Эндээс Програм маань эхэллэ шүү найзуудаа
@@ -37,12 +41,12 @@ var diceDom = document.querySelector( ".dice ");
 
 //заа энд бол event ажиллуулсан байгаа даа хө яаж вэ гэвэл addEventListener('click', blabal ) гээд ажиллуулсан байгаа даа   
 document.querySelector('.btn-roll').addEventListener('click', function (){
-            if (isNewGame ===true){
+            if (isNewGame === true){
+
             var diceNumber =  Math.floor(Math.random()*6)+1;
     document.querySelector( ".dice ").style.display = "block"// шоог веб джэр гөргөж ирнэ.
     document.querySelector( ".dice ").src = 'dice-' +diceNumber + ".png";// буусан санамсаргүй тооны зургийг гаргаж ирнээ хө.
     if(diceNumber !== 1 ){
-        total = roundScore + diceNumber;
         roundScore = roundScore + diceNumber;
         document.getElementById('current-' + activePlayer).textContent = roundScore;
     }
@@ -61,7 +65,7 @@ document.querySelector('.btn-roll').addEventListener('click', function (){
         if(isNewGame === true){
             scores[activePlayer] = scores[activePlayer] + roundScore;
         document.getElementById('score-' + activePlayer ).textContent = scores[activePlayer];
-        if (scores[activePlayer] >= 50 ){
+        if (scores[activePlayer] >= 20 ){
             isNewGame = false;
             document.getElementById("name-" + activePlayer).textContent = "WINNER!!!";
             document.querySelector(".player-"+ activePlayer +"-panel").classList.add("winner");
