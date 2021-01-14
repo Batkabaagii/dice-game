@@ -13,11 +13,23 @@ var roundScore = 0;
  document.querySelector( ".dice ").style.display = "none";
  // dice нь class учраас дуудаж ажиллуулахдаа (цэг) тавьж дуудна.
  // одоо эндээс би шоогоо алга болгоно яаж css-ийн dice гэсэн класс дээр display: none; гэж оруулаад алга болноо
+ intGame();
+ function intGame(){
+    document.getElementById('score-0').textContent = 0;// getElementByID ene bol ID haij bga yumaa hu 
+    document.getElementById('score-1').textContent = 0;
+    document.getElementById('current-0').textContent = 0;
+    document.getElementById('current-1').textContent = 0;
+    document.getElementById("name-0").textContent = "Player 1";
+    document.getElementById("name-1").textContent = "Player 2";
+    document.querySelector(".player-"+ activePlayer +"-panel").classList.remove("winner");
+    document.querySelector( ".dice ").style.display = "none";
+    document.querySelector('.player-'+activePlayer+'-panel').classList.remove('active');
+    document.querySelector('.player-0-panel').classList.add('active');
+    
+
+}
 // Эндээс Програм маань эхэллэ шүү найзуудаа
-document.getElementById('score-0').textContent = 0;// getElementByID ene bol ID haij bga yumaa hu 
-document.getElementById('score-1').textContent = 0;
-document.getElementById('current-0').textContent = 0;
-document.getElementById('current-1').textContent = 0;
+
 var diceDom = document.querySelector( ".dice ");
 
 //заа энд бол event ажиллуулсан байгаа даа хө яаж вэ гэвэл addEventListener('click', blabal ) гээд ажиллуулсан байгаа даа   
@@ -39,7 +51,13 @@ document.querySelector('.btn-roll').addEventListener('click', function (){
         
         scores[activePlayer] = scores[activePlayer] + roundScore;
         document.getElementById('score-' + activePlayer ).textContent = scores[activePlayer];
-        switchToNextPlayer();
+        if (scores[activePlayer] >= 10 ){
+            document.getElementById("name-" + activePlayer).textContent = "WINNER!!!";
+            document.querySelector(".player-"+ activePlayer +"-panel").classList.add("winner");
+            document.querySelector(".player-"+activePlayer+ "-panel").classList.remove("active");
+        }else{
+            switchToNextPlayer();
+        }
         
     });
 function switchToNextPlayer(){
@@ -50,3 +68,4 @@ function switchToNextPlayer(){
         document.querySelector('.player-1-panel').classList.toggle('active');
         // document.querySelector( ".dice ").style.display = "none";
 }
+document.querySelector(".btn-new").addEventListener("click", intGame);
